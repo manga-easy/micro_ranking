@@ -2,7 +2,6 @@ name: manga_easy_ranking
 description: Micro app de ranking do manga easy app.
 version: 1.0.0
 publish_to: none
-homepage:
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -22,11 +21,17 @@ dependencies:
   client_driver:
     git:
       url: https://github.com/manga-easy/manga_easy_client_driver.git
-      ref: v1.0.0
+      ref: v1.1.1
+  manga_easy_themes:
+    git:
+      url: https://github.com/manga-easy/manga_easy_themes.git
+      ref: 1.0.2
   manga_easy_routes:
     git:
       url: https://github.com/manga-easy/manga_easy_routes.git
       ref: v1.0.1
+  get_it: ^7.2.0
+  
 
 dev_dependencies:
   flutter_test:
