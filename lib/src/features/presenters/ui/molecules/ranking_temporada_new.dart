@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy/modules/ranking/views/atoms/card_first_top.dart';
-import 'package:manga_easy/modules/ranking/views/atoms/card_normal_top.dart';
-import 'package:manga_easy/modules/ranking/views/atoms/card_secondario_top.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
+import '../atomic/card_first_top.dart';
+import '../atomic/card_normal_top.dart';
+import '../atomic/card_secondario_top.dart';
 
 final brightSun = ThemeService.of.primaryColor;
 const mirage = Color(0xFF1e2237);

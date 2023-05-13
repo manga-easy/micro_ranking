@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:manga_easy/core/config/app_assets.dart';
-import 'package:manga_easy/modules/ranking/controllers/ranking_controller.dart';
+import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
 
 class CircularTopRank extends StatelessWidget {
   final RankingController ct;
@@ -28,7 +27,10 @@ class CircularTopRank extends StatelessWidget {
         ),
         Text(
           posicao,
-          style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 5),
         Stack(alignment: AlignmentDirectional.bottomCenter, children: [
@@ -42,11 +44,11 @@ class CircularTopRank extends StatelessWidget {
                   height: radius * 1.38,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(45),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        Assets.bordaRank.path,
-                      ),
-                    ),
+                    // image: DecorationImage(
+                    //   image: AssetImage(
+                    //     Assets.bordaRank.path,
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
@@ -78,7 +80,8 @@ class CircularTopRank extends StatelessWidget {
           Card(
             margin: EdgeInsets.only(bottom: destque ? 5 : 0.0),
             color: destque ? const Color(0xffc7903d) : Colors.grey,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 12,
@@ -86,22 +89,22 @@ class CircularTopRank extends StatelessWidget {
               ),
               child: Text(
                 'Lvl $nivel',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.white,
                     ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 84),
-            child: Visibility(
-              visible: destque,
-              child: Image.asset(
-                Assets.coroaRank.path,
-                width: 56,
-                height: 56,
-              ),
-            ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 84),
+            // child: Visibility(
+            //   visible: destque,
+            //   child: Image.asset(
+            //     Assets.coroaRank.path,
+            //     width: 56,
+            //     height: 56,
+            //   ),
+            // ),
           )
         ]),
         SizedBox(height: destque ? 0 : 5),

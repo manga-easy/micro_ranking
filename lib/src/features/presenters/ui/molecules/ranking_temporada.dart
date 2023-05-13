@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:manga_easy/modules/home/presenter/ui/atoms/nao_encontrei_nada.dart';
-import 'package:manga_easy/modules/ranking/controllers/ranking_controller.dart';
-import 'package:manga_easy/modules/ranking/widgets/circurlar_destaque.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/circurlar_destaque.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
+
+import '../../controllers/ranking_controller.dart';
 
 class RankingTemporada extends StatelessWidget {
   final List<NivelUser> listaNivels;
@@ -14,10 +14,10 @@ class RankingTemporada extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (listaNivels.isEmpty) {
-      return Column(
+      return const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          NaoEncontrei(msg: "Nenhum nivel ainda"),
+        children: [
+          // NaoEncontrei(msg: "Nenhum nivel ainda"),
         ],
       );
     }
@@ -26,7 +26,7 @@ class RankingTemporada extends StatelessWidget {
         const SizedBox(height: 15),
         Text(
           'Ranking',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 10),
@@ -119,11 +119,11 @@ class RankingTemporada extends StatelessWidget {
                             children: [
                               Text(
                                 nv.name.isEmpty ? 'N/A' : nv.name,
-                                style: Theme.of(context).textTheme.headline6,
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
                                 'Nivel Atual ${nv.lvl}',
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ],
                           ),
@@ -133,7 +133,7 @@ class RankingTemporada extends StatelessWidget {
                               padding: const EdgeInsets.all(13.0),
                               child: Text(
                                 '${nv.quantity} xp',
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
                           )

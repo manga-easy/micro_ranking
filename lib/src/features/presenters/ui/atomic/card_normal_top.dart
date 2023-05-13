@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy/core/config/helpes.dart';
-import 'package:manga_easy/modules/ranking/views/atoms/card_image_perfil.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/atomic/card_image_perfil.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
 class CardNormalTop extends StatelessWidget {
@@ -22,7 +21,8 @@ class CardNormalTop extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppHelps.limitaTitle(nivelUser.name, 40),
+                  // AppHelps.limitaTitle(nivelUser.name, 40),
+                  nivelUser.name,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(

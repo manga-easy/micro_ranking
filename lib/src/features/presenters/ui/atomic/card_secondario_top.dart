@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy/core/config/app_assets.dart';
-import 'package:manga_easy/core/config/helpes.dart';
-import 'package:manga_easy/modules/ranking/views/atoms/card_image_perfil.dart';
-import 'package:manga_easy/modules/ranking/views/orgamisms/ranking_temporada_new.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/atomic/card_image_perfil.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/ranking_temporada_new.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
 class CardSecondarioTop extends StatelessWidget {
@@ -35,7 +33,8 @@ class CardSecondarioTop extends StatelessWidget {
                 ),
               ),
               Text(
-                AppHelps.limitaTitle(nivel.name, 15),
+                // AppHelps.limitaTitle(nivel.name, 15),
+                nivel.name,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -44,12 +43,12 @@ class CardSecondarioTop extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Image.asset(
-                    Assets.losango.path,
-                    width: 18,
-                    height: 18,
-                    color: cerulean,
-                  ),
+                  // Image.asset(
+                  //   Assets.losango.path,
+                  //   width: 18,
+                  //   height: 18,
+                  //   color: cerulean,
+                  // ),
                   Text(
                     numero,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(

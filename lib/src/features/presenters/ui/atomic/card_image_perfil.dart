@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:manga_easy/core/config/app_assets.dart';
-import 'package:manga_easy/core/services/appwrite.dart';
-import 'package:manga_easy/main.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
 class CardImagePerfil extends StatelessWidget {
@@ -35,12 +32,14 @@ class CardImagePerfil extends StatelessWidget {
   Future<Uint8List> carregaInicial(String name) async {
     try {
       if (name.isEmpty) {
-        var not = await rootBundle.load(Assets.soCat.path);
-        return not.buffer.asUint8List();
+        // var not = await rootBundle.load(Assets.soCat.path);
+        // return not.buffer.asUint8List();
+        return Uint8List(1);
       }
-      return await di.get<IDatabaseNuvem>().getInitials(name: name);
+      // return await di.get<IDatabaseNuvem>().getInitials(name: name);
     } catch (e) {
       return Uint8List(1);
     }
+    return Uint8List(1);
   }
 }
