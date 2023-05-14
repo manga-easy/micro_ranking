@@ -10,7 +10,7 @@ class RankingController {
 
   var status = ValueNotifier<StatusState>(LoadingStatusState());
   List<TemporadaModel> temporadas = List.generate(
-    3,
+    4,
     (index) => TemporadaModel(
       id: 'id$index',
       datafim: 20,
