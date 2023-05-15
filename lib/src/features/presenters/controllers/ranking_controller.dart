@@ -1,100 +1,60 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:manga_easy_sdk/manga_easy_sdk.dart';
+import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:manga_easy_ranking/src/features/domain/entities/season_entity.dart';
+import 'package:manga_easy_ranking/src/features/domain/usecases/ranking/get_ranking_usecase.dart';
+import 'package:manga_easy_ranking/src/features/domain/usecases/seasons/get_seasons_usecase.dart';
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
-import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 
-class RankingController {
-  // final IDatabaseNuvem app;
+class RankingController extends ChangeNotifier {
+  final GetRankingUseCase _rankingUseCase;
+  final GetSeasonsUseCase _seasonsUseCase;
 
-  var status = ValueNotifier<StatusState>(LoadingStatusState());
-  List<TemporadaModel> temporadas = List.generate(
-    4,
-    (index) => TemporadaModel(
-      id: 'id$index',
-      datafim: 20,
-      datainit: 1,
-      nome: 'Temporada $index',
-      number: index,
-    ),
-  );
+  RankingController(this._rankingUseCase, this._seasonsUseCase);
 
-  // RankingController({
-  //   required this.app,
-  // });
+  var state = ValueNotifier<StatusState>(NotFoundStatusState());
+  List<SeasonEntity> seasons = [];
+  List<RankingEntity> ranking = [];
+  late String selectedSeason = seasons[0].id;
 
-  void dispose() {
-    status.dispose();
+  Future<void> init() async {
+    await loadSeasons();
+    await loadRanking(selectedSeason);
   }
 
-  Future<void> init(BuildContext context) async {
-    await carregaTemporadas();
-  }
-
-  Future<void> carregaTemporadas() async {
+  Future<void> loadSeasons() async {
+    state.value = LoadingStatusState();
     try {
-      if (temporadas.isNotEmpty) {
+      if (seasons.isNotEmpty) {
+        state.value = FinishedStatusState();
         return;
       }
-      // var ret = await app.listDocuments(
-      //   collectionId: TemporadaModel.collectionId,
-      //   orderAttribute: ['number'],
-      //   orderTypes: ['ASC'],
-      // );
-      temporadas = [
-        TemporadaModel(
-          id: '',
-          datafim: DateTime.now().millisecondsSinceEpoch,
-          datainit: DateTime.now().millisecondsSinceEpoch,
-          nome: 'Temporada 0',
-          number: 0,
-        ),
-        // ...ret.documents.map((e) => TemporadaModel.fromJson(e.data)).toList(),
-      ];
+      seasons = await _seasonsUseCase();
+      state.value = FinishedStatusState();
     } catch (e) {
-      status.value = NotFoundStatusState();
+      state.value = NotFoundStatusState();
       Helps.log(e);
     }
-    status.value = FinishedStatusState();
+    notifyListeners();
   }
 
-  Future<List<NivelUser>> carregaRanking(String temporada) async {
-    // try {
-    //   var listaNivels = <NivelUser>[];
-    //   // var ret = await app.listDocuments(
-    //   //   collectionId: NivelUser.collectionId,
-    //   //   orderAttribute: ['lvl'],
-    //   //   orderTypes: ['DESC'],
-    //   //   limit: 100,
-    //   //   filters: [Query.equal('temporada', temporada)],
-    //   // );
-    //   // listaNivels =
-    //   //     ret.documents.map((e) => NivelUser.fromJson(e.data)).toList();
-    //   // listaNivels.sort(sorts);
-
-    //   status.value = FinishedStatusState();
-    //   return listaNivels;
-    // } catch (e) {
-    //   status.value = NotFoundStatusState();
-    //   Helps.log(e);
-    //   return [];
-    // }
-    status.value = NotFoundStatusState();
-    return [];
-  }
-
-  Future<Uint8List> carregaInicial(String name) async {
-    // try {
-    //   if (name.isEmpty) {
-    //     var not = await rootBundle.load(Assets.soCat.path);
-    //     return not.buffer.asUint8List();
-    //   }
-    //   return await app.getInitials(name: name);
-    // } catch (e) {
-    //   return Uint8List(1);
-    // }
-    return Uint8List(1);
+  Future<List<RankingEntity>> loadRanking(String id) async {
+    state.value = LoadingStatusState();
+    try {
+      if (ranking.isNotEmpty) {
+        state.value = FinishedStatusState();
+        // return ranking;
+      }
+      ranking = await _rankingUseCase.getRanking(id);
+      state.value = FinishedStatusState();
+      return ranking;
+    } catch (e) {
+      state.value = NotFoundStatusState();
+      Helps.log(e);
+    }
+    notifyListeners();
+    return ranking;
   }
 
   int sorts(NivelUser a, NivelUser b) {
