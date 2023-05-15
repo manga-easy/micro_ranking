@@ -12,13 +12,13 @@ void main() {
     RankingMicroApp().registerDependencies();
   });
 
-  SeasonRepository seasonRepository = GetIt.I();
-
   test('Season não é vazia', () async {
+    SeasonRepository seasonRepository = GetIt.I();
     expect(await seasonRepository.getSeason(), isNotEmpty);
   });
 
   test('Precisa ter 5 seasons', () async {
+    SeasonRepository seasonRepository = GetIt.I();
     var result = await seasonRepository.getSeason();
     expect(result.length, 5);
   });
