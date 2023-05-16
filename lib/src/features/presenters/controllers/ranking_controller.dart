@@ -13,14 +13,11 @@ class RankingController extends ChangeNotifier {
 
   RankingController(this._rankingUseCase, this._seasonsUseCase);
 
-  var state = ValueNotifier<StatusState>(NotFoundStatusState());
+  var state = ValueNotifier<StatusState>(LoadingStatusState());
   List<SeasonEntity> seasons = [];
-  List<RankingEntity> ranking = [];
-  late String selectedSeason = seasons[0].id;
 
   Future<void> init() async {
     await loadSeasons();
-    await loadRanking(selectedSeason);
   }
 
   Future<void> loadSeasons() async {
@@ -40,40 +37,28 @@ class RankingController extends ChangeNotifier {
   }
 
   Future<List<RankingEntity>> loadRanking(String id) async {
-    state.value = LoadingStatusState();
+    List<RankingEntity> ranking = [];
     try {
-      if (ranking.isNotEmpty) {
-        state.value = FinishedStatusState();
-        // return ranking;
-      }
       ranking = await _rankingUseCase.getRanking(id);
-      state.value = FinishedStatusState();
       return ranking;
     } catch (e) {
-      state.value = NotFoundStatusState();
       Helps.log(e);
     }
-    notifyListeners();
     return ranking;
   }
 
-  int sorts(NivelUser a, NivelUser b) {
-    final propertyA = a.lvl;
-    final propertyB = b.lvl;
-    if (propertyA > propertyB) {
-      return -1;
-    } else if (propertyA < propertyB) {
-      return 1;
-    } else {
-      final protA = a.quantity;
-      final protB = b.quantity;
-      if (protA > protB) {
-        return -1;
-      } else if (protA < protB) {
-        return 1;
-      } else {
-        return 0;
+  String getInitialName(String name) {
+    // TODO: Resolver erro "string is not well-formed UTF-16"
+    // Esse erro acontece quando o nome do usuário tem caracteres especiais
+    try {
+      final nameList = name.trim().split(' ');
+      if (nameList.length == 1) {
+        return nameList.first.substring(0, 1).toUpperCase();
       }
+      return (nameList.first.substring(0, 1) + nameList[1].substring(0, 1))
+          .toUpperCase();
+    } catch (e) {
+      return 'N/A';
     }
   }
 }
