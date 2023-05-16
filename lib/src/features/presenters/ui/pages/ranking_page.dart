@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
 import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
-import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
-
-import '../molecules/ranking_temporada_new.dart';
+import '../molecules/rankings.dart';
 import '../states/status_state_imp.dart';
 
 class RankingPage extends StatefulWidget {
@@ -16,10 +15,10 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  final RankingController cont = GetIt.I();
+  final RankingController ct = GetIt.I();
   @override
   void initState() {
-    cont.init(context);
+    ct.init();
     super.initState();
   }
 
@@ -27,20 +26,30 @@ class _RankingPageState extends State<RankingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ValueListenableBuilder(
-        valueListenable: cont.status,
-        builder: (context, StatusState value, child) {
-          if (value == LoadingStatusState()) {
-            return const CircularProgressIndicator();
+        valueListenable: ct.state,
+        builder: (context, StatusState state, child) {
+          if (state == LoadingStatusState()) {
+            return const Scaffold(
+              body: Center(
+                child: SizedBox(
+                  height: 45,
+                  width: 45,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            );
           }
-          if (value == NotFoundStatusState()) {
+          if (state == NotFoundStatusState()) {
             return const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [Text('Não encontrado')],
             );
           }
           return DefaultTabController(
-            initialIndex: cont.temporadas.length - 1,
-            length: cont.temporadas.length,
+            // estava com erro porque não dava tempo de carregar a lista ct.seasons
+            initialIndex:
+                state == FinishedStatusState() ? ct.seasons.length - 1 : 0,
+            length: ct.seasons.length,
             child: Scaffold(
               body: Column(
                 children: [
@@ -50,7 +59,7 @@ class _RankingPageState extends State<RankingPage> {
                       isScrollable: true,
                       indicatorColor: ThemeService.of.primaryColor,
                       labelColor: ThemeService.of.backgroundText,
-                      tabs: cont.temporadas
+                      tabs: ct.seasons
                           .map((e) => Tab(
                                 text: e.nome,
                               ))
@@ -59,38 +68,30 @@ class _RankingPageState extends State<RankingPage> {
                   ),
                   Expanded(
                     child: TabBarView(
-                      children: cont.temporadas
+                      children: ct.seasons
                           .map(
-                            (e) => FutureBuilder<List<NivelUser>>(
-                              future: cont.carregaRanking(e.id!),
+                            (e) => FutureBuilder<List<RankingEntity>>(
+                              future: ct.loadRanking(e.id),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return RankingTemporadaNew(
-                                      listaNivels: List.generate(
-                                    20,
-                                    (index) => NivelUser(
-                                      timeCria: 12312312312,
-                                      lvl: 1,
-                                      quantity: 1,
-                                      minute: 1,
-                                      userId: 'userId',
-                                      timeUp: 1,
-                                      name: 'name',
-                                      total: 1,
-                                      temporada: 'temporada',
-                                    ),
-                                  ));
+                                  return Ranking(
+                                    ct: ct,
+                                    rankingList: snapshot.data!,
+                                  );
                                 }
                                 if (snapshot.hasError) {
-                                  return const Column(
+                                  return Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       // NaoEncontrei(msg: "Deu algum erro"),
-                                      Text('Deu algum erro'),
+                                      Text(
+                                          'Erro: ${snapshot.error.toString()}'),
                                     ],
                                   );
                                 }
-                                return const CircularProgressIndicator();
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
                               },
                             ),
                           )
