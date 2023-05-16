@@ -25,7 +25,7 @@ class RankingDtoMapper {
       createdHour: seasonDto.createdHour,
       level: seasonDto.level,
       minute: seasonDto.minute,
-      name: seasonDto.name,
+      username: seasonDto.name,
       temp: seasonDto.temporada,
       uid: seasonDto.uid,
       quantity: seasonDto.quantity,
