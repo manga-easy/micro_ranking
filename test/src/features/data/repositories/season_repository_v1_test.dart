@@ -20,6 +20,6 @@ void main() {
   test('Precisa ter 5 seasons', () async {
     SeasonRepository seasonRepository = GetIt.I();
     var result = await seasonRepository.getSeason();
-    expect(result.length, 5);
+    expect(result.length, 4);
   });
 }

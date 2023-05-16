@@ -43,7 +43,7 @@ void main() {
       var result = rankingMapper.toEntity(response.first);
 
       expect(result.uid, '63e3d4f65b12ce723a58');
-      expect(result.name, 'ygor');
+      expect(result.username, 'ygor');
       expect(result.total, 206954);
       expect(result.temp, '63e2f1b96fd9b5a51bfe');
       expect(result.level, 74);
