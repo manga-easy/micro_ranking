@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:manga_easy_sdk/manga_easy_sdk.dart';
+import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
-import '../atomic/card_first_top.dart';
-import '../atomic/card_normal_top.dart';
-import '../atomic/card_secondario_top.dart';
+import 'card_first_ranking.dart';
+import 'card_normal_ranking.dart';
+import 'card_sub_ranking.dart';
 
-final brightSun = ThemeService.of.primaryColor;
-const mirage = Color(0xFF1e2237);
-final webOrange = ThemeService.of.primaryText;
-const milkPunch = Color(0xfffff7d8);
-const cerulean = Color(0xff009bd6);
-const codGray = Color(0xff121212);
-const mineShaft = Color(0xff312f2f);
+class Ranking extends StatelessWidget {
+  final List<RankingEntity> rankingList;
+  final RankingController ct;
 
-class RankingTemporadaNew extends StatelessWidget {
-  final List<NivelUser> listaNivels;
-  const RankingTemporadaNew({
+  const Ranking({
     super.key,
-    required this.listaNivels,
+    required this.rankingList,
+    required this.ct,
   });
   @override
   Widget build(BuildContext context) {
@@ -42,35 +38,41 @@ class RankingTemporadaNew extends StatelessWidget {
               )
             ],
           ),
-          //CardTemporada(),
-          //const SizedBox(height: 15),
-          CardFirstTop(nivel: listaNivels.elementAt(0)),
+          CardFirstRanking(
+            ranking: rankingList.elementAt(0),
+            ct: ct,
+          ),
           const SizedBox(height: 15),
           Row(
             children: [
               Expanded(
-                  child: CardSecondarioTop(
-                nivel: listaNivels.elementAt(1),
-                numero: '2',
-              )),
+                child: CardSecondarioTop(
+                  ct: ct,
+                  ranking: rankingList.elementAt(1),
+                  rankingPosition: 2,
+                ),
+              ),
               const SizedBox(width: 5),
               Expanded(
-                  child: CardSecondarioTop(
-                nivel: listaNivels.elementAt(2),
-                numero: '3',
-              )),
+                child: CardSecondarioTop(
+                  ct: ct,
+                  ranking: rankingList.elementAt(2),
+                  rankingPosition: 3,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20),
           Expanded(
             child: ListView.separated(
-              itemCount: listaNivels.skip(3).toList().length,
-              separatorBuilder: (context, index) => const Divider(
-                color: mineShaft,
+              itemCount: rankingList.skip(3).toList().length,
+              separatorBuilder: (context, index) => Divider(
+                color: ThemeService.of.backgroundColor,
               ),
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => CardNormalTop(
-                nivelUser: listaNivels.skip(3).toList()[index],
+              itemBuilder: (context, index) => CardNormalRanking(
+                ct: ct,
+                ranking: rankingList.skip(3).toList()[index],
               ),
             ),
           )
