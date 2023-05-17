@@ -15,8 +15,7 @@ import 'package:manga_easy_ranking/src/features/domain/usecases/seasons/get_seas
 import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
 import 'package:manga_easy_routes/manga_easy_routes.dart';
 import 'package:get_it/get_it.dart';
-
-import '../features/presenters/ui/pages/ranking_page.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/pages/ranking_page.dart';
 
 class RankingMicroApp extends MicroApp {
   GetIt getIt = GetIt.instance;

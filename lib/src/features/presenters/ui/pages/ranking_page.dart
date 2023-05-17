@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:manga_easy_ranking/src/core/services/api_error.dart';
 import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
 import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/api_error_widget.dart';
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
-import '../molecules/rankings.dart';
-import '../states/status_state_imp.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/rankings.dart';
+import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -40,9 +42,8 @@ class _RankingPageState extends State<RankingPage> {
             );
           }
           if (state == NotFoundStatusState()) {
-            return const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text('Não encontrado')],
+            return const ApiErrorWidget(
+              error: 'Ocorreu algum erro, tente novamente mais tarde!',
             );
           }
           return DefaultTabController(
@@ -60,9 +61,11 @@ class _RankingPageState extends State<RankingPage> {
                       indicatorColor: ThemeService.of.primaryColor,
                       labelColor: ThemeService.of.backgroundText,
                       tabs: ct.seasons
-                          .map((e) => Tab(
-                                text: e.nome,
-                              ))
+                          .map(
+                            (e) => Tab(
+                              text: e.nome,
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
@@ -80,14 +83,16 @@ class _RankingPageState extends State<RankingPage> {
                                   );
                                 }
                                 if (snapshot.hasError) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // NaoEncontrei(msg: "Deu algum erro"),
-                                      Text(
-                                          'Erro: ${snapshot.error.toString()}'),
-                                    ],
-                                  );
+                                  var error = snapshot.error;
+                                  if (error is ApiError) {
+                                    return ApiErrorWidget(error: error.message);
+                                  }
+                                  if (error is Exception) {
+                                    return ApiErrorWidget(
+                                      error:
+                                          'Ocorreu algum erro, tente novamente mais tarde!',
+                                    );
+                                  }
                                 }
                                 return const Center(
                                   child: CircularProgressIndicator(),
