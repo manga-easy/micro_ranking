@@ -30,7 +30,7 @@ class _RankingPageState extends State<RankingPage> {
       child: ValueListenableBuilder(
         valueListenable: ct.state,
         builder: (context, StatusState state, child) {
-          if (state == LoadingStatusState()) {
+          if (state is LoadingStatusState) {
             return const Scaffold(
               body: Center(
                 child: SizedBox(
@@ -41,15 +41,13 @@ class _RankingPageState extends State<RankingPage> {
               ),
             );
           }
-          if (state == NotFoundStatusState()) {
+          if (state is NotFoundStatusState) {
             return const ApiErrorWidget(
               error: 'Ocorreu algum erro, tente novamente mais tarde!',
             );
           }
           return DefaultTabController(
-            // estava com erro porque não dava tempo de carregar a lista ct.seasons
-            initialIndex:
-                state == FinishedStatusState() ? ct.seasons.length - 1 : 0,
+            initialIndex: ct.seasons.length - 1,
             length: ct.seasons.length,
             child: Scaffold(
               body: Column(
