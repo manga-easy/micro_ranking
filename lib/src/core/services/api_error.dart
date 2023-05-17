@@ -1,3 +1,3 @@
-abstract class ApiErro implements Exception {
+abstract class ApiError implements Exception {
   abstract String message;
 }
