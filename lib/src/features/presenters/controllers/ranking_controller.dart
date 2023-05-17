@@ -38,25 +38,19 @@ class RankingController extends ChangeNotifier {
 
   Future<List<RankingEntity>> loadRanking(String id) async {
     List<RankingEntity> ranking = [];
-    try {
-      ranking = await _rankingUseCase.getRanking(id);
-      return ranking;
-    } catch (e) {
-      Helps.log(e);
-    }
+    ranking = await _rankingUseCase.getRanking(id);
     return ranking;
   }
 
   String getInitialName(String name) {
-    // TODO: Resolver erro "string is not well-formed UTF-16"
-    // Esse erro acontece quando o nome do usuário tem caracteres especiais
     try {
       final nameList = name.trim().split(' ');
+      String firstNameInitial = nameList.first.characters.first.toUpperCase();
       if (nameList.length == 1) {
-        return nameList.first.substring(0, 1).toUpperCase();
+        return firstNameInitial;
       }
-      return (nameList.first.substring(0, 1) + nameList[1].substring(0, 1))
-          .toUpperCase();
+      String secondNameInitial = nameList[1].characters.first.toUpperCase();
+      return firstNameInitial + secondNameInitial;
     } catch (e) {
       return 'N/A';
     }
