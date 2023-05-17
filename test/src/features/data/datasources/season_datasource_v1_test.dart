@@ -61,7 +61,4 @@ void main() {
       expect(response.length, 25);
     });
   });
-
-  // TODO - group('Retornos da api de temporadas com erro', () {});
-  // TODO - group('Retornos da api de Ranking com erro', () {});
 }
