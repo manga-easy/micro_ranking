@@ -7,7 +7,7 @@ import 'package:manga_easy_ranking/src/features/domain/usecases/seasons/get_seas
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
 import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
 
-class RankingController extends ChangeNotifier {
+class RankingController {
   final GetRankingUseCase _rankingUseCase;
   final GetSeasonsUseCase _seasonsUseCase;
 
@@ -33,7 +33,6 @@ class RankingController extends ChangeNotifier {
       state.value = NotFoundStatusState();
       Helps.log(e);
     }
-    notifyListeners();
   }
 
   Future<List<RankingEntity>> loadRanking(String id) async {
