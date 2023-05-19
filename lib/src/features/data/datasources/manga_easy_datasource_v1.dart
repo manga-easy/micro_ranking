@@ -10,7 +10,7 @@ import 'package:manga_easy_ranking/src/features/data/mappers/season_dto_mapper.d
 
 class MangaEasyDataSourceV1 implements MangaEasyDataSource {
   final String path = 'seasons';
-  final String url = 'http://monolito.lucas-cm.com.br';
+  final String url = 'https://monolito.lucas-cm.com.br';
   final String version = 'v1';
   final ClientRequest _clientRequest;
   final SeasonDtoMapper _seasonDtoMapper;

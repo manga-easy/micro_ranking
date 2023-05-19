@@ -8,7 +8,7 @@ O aplicativo é gratuito para download e esta disponivel na área de download lo
 
 # 🕵️‍♂️ Sobre o repositório
 
- Este MicroApp adiciona uma nova camada de funcionalidade ao app, fornecendo um sistema de recomendação para ajudar os usuários a descobrirem novos mangás.
+ Este MicroApp adiciona a funcionalidade de Ranking, desenvolvido para exibir o nível dos usuários com base nos mangás que eles leram. Com essa funcionalidade, os usuários podem acompanhar seu progresso e comparar seu desempenho com outros entusiastas de mangá.
 
 # ⛏️ Tecnologias
 
