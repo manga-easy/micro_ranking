@@ -68,6 +68,7 @@ class _RankingPageState extends State<RankingPage> {
                     ),
                   ),
                   Expanded(
+                    // TODO: CRIAR BUILDER PARA RENDERIZAR CADA TEMPORADA INDIVIDUALMENTE
                     child: TabBarView(
                       children: ct.seasons
                           .map(
