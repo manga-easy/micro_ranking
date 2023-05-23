@@ -12,7 +12,7 @@ class RankingController {
   final GetSeasonsUseCase _seasonsUseCase;
 
   RankingController(this._rankingUseCase, this._seasonsUseCase);
-
+  TabController? tabController;
   var state = ValueNotifier<StatusState>(LoadingStatusState());
   List<SeasonEntity> seasons = [];
   late String seasonId;

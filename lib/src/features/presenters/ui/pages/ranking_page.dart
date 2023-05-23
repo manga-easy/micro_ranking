@@ -19,22 +19,28 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage>
     with TickerProviderStateMixin {
   final RankingController ct = GetIt.I();
-  late final TabController tabController;
+
   @override
   void initState() {
-    ct.init().then(
-      (value) {
-        tabController = TabController(
-          length: ct.seasons.length,
-          vsync: this,
-          initialIndex: ct.seasons.length - 1,
-        );
-        tabController.addListener(() {
-          ct.seasonId = ct.seasons[tabController.index].id;
-          setState(() {});
-        });
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ct.init().then(
+        (value) {
+          ct.tabController = TabController(
+            length: ct.seasons.length,
+            vsync: this,
+            initialIndex: ct.seasons.length - 1,
+          );
+          ct.tabController!.addListener(() {
+            if (mounted) {
+              setState(() {
+                ct.seasonId = ct.seasons[ct.tabController!.index].id;
+              });
+            }
+          });
+        },
+      );
+    });
+
     super.initState();
   }
 
@@ -66,7 +72,7 @@ class _RankingPageState extends State<RankingPage>
                 Container(
                   color: ThemeService.of.selectText,
                   child: TabBar(
-                    controller: tabController,
+                    controller: ct.tabController,
                     isScrollable: true,
                     indicatorColor: ThemeService.of.primaryColor,
                     labelColor: ThemeService.of.backgroundText,
@@ -81,7 +87,7 @@ class _RankingPageState extends State<RankingPage>
                 ),
                 Expanded(
                   child: TabBarView(
-                    controller: tabController,
+                    controller: ct.tabController,
                     children: ct.seasons
                         .map(
                           (e) => FutureBuilder<List<RankingEntity>>(
