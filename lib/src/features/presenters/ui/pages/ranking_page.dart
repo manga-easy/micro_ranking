@@ -30,13 +30,15 @@ class _RankingPageState extends State<RankingPage>
             vsync: this,
             initialIndex: ct.seasons.length - 1,
           );
-          ct.tabController!.addListener(() {
-            if (mounted) {
-              setState(() {
-                ct.seasonId = ct.seasons[ct.tabController!.index].id;
-              });
-            }
-          });
+          if (ct.tabController != null) {
+            ct.tabController!.addListener(() {
+              if (mounted) {
+                setState(() {
+                  ct.seasonId = ct.seasons[ct.tabController!.index].id;
+                });
+              }
+            });
+          }
         },
       );
     });
