@@ -19,22 +19,23 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage>
     with TickerProviderStateMixin {
   final RankingController ct = GetIt.I();
+  TabController? tabController;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ct.init().then(
         (value) {
-          ct.tabController = TabController(
+          tabController = TabController(
             length: ct.seasons.length,
             vsync: this,
             initialIndex: ct.seasons.length - 1,
           );
-          if (ct.tabController != null) {
-            ct.tabController!.addListener(() {
+          if (tabController != null) {
+            tabController!.addListener(() {
               if (mounted) {
                 setState(() {
-                  ct.seasonId = ct.seasons[ct.tabController!.index].id;
+                  ct.seasonId = ct.seasons[tabController!.index].id;
                 });
               }
             });
@@ -74,7 +75,7 @@ class _RankingPageState extends State<RankingPage>
                 Container(
                   color: ThemeService.of.selectText,
                   child: TabBar(
-                    controller: ct.tabController,
+                    controller: tabController,
                     isScrollable: true,
                     indicatorColor: ThemeService.of.primaryColor,
                     labelColor: ThemeService.of.backgroundText,
@@ -89,7 +90,7 @@ class _RankingPageState extends State<RankingPage>
                 ),
                 Expanded(
                   child: TabBarView(
-                    controller: ct.tabController,
+                    controller: tabController,
                     children: ct.seasons
                         .map(
                           (e) => FutureBuilder<List<RankingEntity>>(
