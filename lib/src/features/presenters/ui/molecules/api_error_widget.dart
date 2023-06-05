@@ -1,6 +1,4 @@
-import 'package:coffee_cup/features/assets/assets_unicorn.dart';
-import 'package:coffee_cup/features/images/coffee_image.dart';
-import 'package:coffee_cup/features/text/coffee_text.dart';
+import 'package:coffee_cup/coffe_cup.dart';
 import 'package:flutter/material.dart';
 
 class ApiErrorWidget extends StatelessWidget {

@@ -12,9 +12,9 @@ class RankingController {
   final GetSeasonsUseCase _seasonsUseCase;
 
   RankingController(this._rankingUseCase, this._seasonsUseCase);
-
   var state = ValueNotifier<StatusState>(LoadingStatusState());
   List<SeasonEntity> seasons = [];
+  late String seasonId;
 
   Future<void> init() async {
     await loadSeasons();
@@ -28,6 +28,7 @@ class RankingController {
         return;
       }
       seasons = await _seasonsUseCase();
+      seasonId = seasons.last.id;
       state.value = FinishedStatusState();
     } catch (e) {
       state.value = NotFoundStatusState();
@@ -37,7 +38,9 @@ class RankingController {
 
   Future<List<RankingEntity>> loadRanking(String id) async {
     List<RankingEntity> ranking = [];
-    ranking = await _rankingUseCase.getRanking(id);
+    if (id == seasonId) {
+      return await _rankingUseCase.getRanking(id);
+    }
     return ranking;
   }
 

@@ -16,11 +16,34 @@ class RankingPage extends StatefulWidget {
   State<RankingPage> createState() => _RankingPageState();
 }
 
-class _RankingPageState extends State<RankingPage> {
+class _RankingPageState extends State<RankingPage>
+    with TickerProviderStateMixin {
   final RankingController ct = GetIt.I();
+  TabController? tabController;
+
   @override
   void initState() {
-    ct.init();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ct.init().then(
+        (value) {
+          tabController = TabController(
+            length: ct.seasons.length,
+            vsync: this,
+            initialIndex: ct.seasons.length - 1,
+          );
+          if (tabController != null) {
+            tabController!.addListener(() {
+              if (mounted) {
+                setState(() {
+                  ct.seasonId = ct.seasons[tabController!.index].id;
+                });
+              }
+            });
+          }
+        },
+      );
+    });
+
     super.initState();
   }
 
@@ -46,63 +69,62 @@ class _RankingPageState extends State<RankingPage> {
               error: 'Ocorreu algum erro, tente novamente mais tarde!',
             );
           }
-          return DefaultTabController(
-            initialIndex: ct.seasons.length - 1,
-            length: ct.seasons.length,
-            child: Scaffold(
-              body: Column(
-                children: [
-                  Container(
-                    color: ThemeService.of.selectText,
-                    child: TabBar(
-                      isScrollable: true,
-                      indicatorColor: ThemeService.of.primaryColor,
-                      labelColor: ThemeService.of.backgroundText,
-                      tabs: ct.seasons
-                          .map(
-                            (e) => Tab(
-                              text: e.nome,
-                            ),
-                          )
-                          .toList(),
-                    ),
+          return Scaffold(
+            body: Column(
+              children: [
+                Container(
+                  color: ThemeService.of.selectText,
+                  child: TabBar(
+                    controller: tabController,
+                    isScrollable: true,
+                    indicatorColor: ThemeService.of.primaryColor,
+                    labelColor: ThemeService.of.backgroundText,
+                    tabs: ct.seasons
+                        .map(
+                          (e) => Tab(
+                            text: e.nome,
+                          ),
+                        )
+                        .toList(),
                   ),
-                  Expanded(
-                    child: TabBarView(
-                      children: ct.seasons
-                          .map(
-                            (e) => FutureBuilder<List<RankingEntity>>(
-                              future: ct.loadRanking(e.id),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Ranking(
-                                    ct: ct,
-                                    rankingList: snapshot.data!,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: ct.seasons
+                        .map(
+                          (e) => FutureBuilder<List<RankingEntity>>(
+                            future: ct.loadRanking(e.id),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                var error = snapshot.error;
+                                if (error is ApiError) {
+                                  return ApiErrorWidget(error: error.message);
+                                }
+                                if (error is Exception) {
+                                  return ApiErrorWidget(
+                                    error:
+                                        'Ocorreu algum erro, tente novamente mais tarde!',
                                   );
                                 }
-                                if (snapshot.hasError) {
-                                  var error = snapshot.error;
-                                  if (error is ApiError) {
-                                    return ApiErrorWidget(error: error.message);
-                                  }
-                                  if (error is Exception) {
-                                    return ApiErrorWidget(
-                                      error:
-                                          'Ocorreu algum erro, tente novamente mais tarde!',
-                                    );
-                                  }
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                              }
+                              if (snapshot.hasData &&
+                                  snapshot.data!.isNotEmpty) {
+                                return Ranking(
+                                  ct: ct,
+                                  rankingList: snapshot.data!,
                                 );
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
+                              }
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          ),
+                        )
+                        .toList(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
