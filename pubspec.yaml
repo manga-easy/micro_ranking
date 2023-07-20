@@ -1,6 +1,6 @@
-name: manga_easy_ranking
+name: ranking
 description: Micro app de ranking do manga easy app.
-version: 1.0.0
+version: 1.0.3
 publish_to: none
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   manga_easy_sdk:
     git:
       url: https://github.com/manga-easy/manga_easy_sdk.git
-      ref: v1.3.0
+      ref: v1.5.0
   coffee_cup:
     git:
       url: https://github.com/manga-easy/manga_easy_coffee_cup.git
@@ -29,11 +29,10 @@ dependencies:
   manga_easy_routes:
     git:
       url: https://github.com/manga-easy/manga_easy_routes.git
-      ref: v1.0.2
+      ref: v1.0.3
   
   get_it: ^7.2.0
   
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
