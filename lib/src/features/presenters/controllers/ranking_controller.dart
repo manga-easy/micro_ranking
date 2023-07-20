@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:manga_easy_sdk/manga_easy_sdk.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/season_entity.dart';
-import 'package:manga_easy_ranking/src/features/domain/usecases/ranking/get_ranking_usecase.dart';
-import 'package:manga_easy_ranking/src/features/domain/usecases/seasons/get_seasons_usecase.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
+import 'package:ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:ranking/src/features/domain/entities/season_entity.dart';
+import 'package:ranking/src/features/domain/usecases/ranking/get_ranking_usecase.dart';
+import 'package:ranking/src/features/domain/usecases/seasons/get_seasons_usecase.dart';
+import 'package:ranking/src/features/presenters/ui/states/status_state.dart';
+import 'package:ranking/src/features/presenters/ui/states/status_state_imp.dart';
 
 class RankingController {
   final GetRankingUseCase _rankingUseCase;

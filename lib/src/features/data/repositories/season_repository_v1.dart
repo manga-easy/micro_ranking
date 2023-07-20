@@ -1,7 +1,7 @@
-import 'package:manga_easy_ranking/src/features/data/datasources/manga_easy_datasource.dart';
-import 'package:manga_easy_ranking/src/features/data/mappers/season_dto_mapper.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/season_entity.dart';
-import 'package:manga_easy_ranking/src/features/domain/repositories/season_repository.dart';
+import 'package:ranking/src/features/data/datasources/manga_easy_datasource.dart';
+import 'package:ranking/src/features/data/mappers/season_dto_mapper.dart';
+import 'package:ranking/src/features/domain/entities/season_entity.dart';
+import 'package:ranking/src/features/domain/repositories/season_repository.dart';
 
 class SeasonRepositoryV1 implements SeasonRepository {
   final MangaEasyDataSource _mangaEasyDataSource;

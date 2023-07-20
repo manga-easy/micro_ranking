@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:manga_easy_ranking/src/core/services/api_error.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
-import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/api_error_widget.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state.dart';
+import 'package:manga_easy_sdk/manga_easy_sdk.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/molecules/rankings.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
+import 'package:ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:ranking/src/features/presenters/controllers/ranking_controller.dart';
+import 'package:ranking/src/features/presenters/ui/molecules/api_error_widget.dart';
+import 'package:ranking/src/features/presenters/ui/molecules/rankings.dart';
+import 'package:ranking/src/features/presenters/ui/states/status_state.dart';
+import 'package:ranking/src/features/presenters/ui/states/status_state_imp.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});

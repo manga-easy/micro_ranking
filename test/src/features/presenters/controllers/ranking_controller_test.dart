@@ -1,11 +1,11 @@
 import 'package:client_driver/client_driver.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:manga_easy_ranking/manga_easy_ranking.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/season_entity.dart';
-import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/states/status_state_imp.dart';
+import 'package:ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:ranking/src/features/domain/entities/season_entity.dart';
+import 'package:ranking/src/features/presenters/controllers/ranking_controller.dart';
+import 'package:ranking/src/features/presenters/ui/states/status_state_imp.dart';
+import 'package:ranking/src/microapp/ranking_microapp.dart';
 
 void main() {
   setUpAll(() {
@@ -15,12 +15,10 @@ void main() {
     RankingMicroApp().registerDependencies();
   });
 
-  test(
-      ''' Temporada
+  test(''' Temporada
       1 - Verifica se o nome da temporada foi retornado corretamente
       2 - Se o estado é FinishedStatusState
-      ''',
-      () async {
+      ''', () async {
     RankingController controller = GetIt.I();
     final seasons = [
       SeasonEntity(
@@ -60,35 +58,34 @@ void main() {
   //   expect(controller.state.value, isA<NotFoundStatusState>());
   // });
 
-  test(
-      '''
+  test('''
       Ranking:
-      1 - Verifica se o nome do usuário da temporada "63e2f1b96fd9b5a51bfe" foi retornado corretamente 
+      1 - Verifica se o nome do usuário da temporada "64500df828ed1318864e" foi retornado corretamente 
       2 - Se o estado é FinishedStatusState
-      ''',
-      () async {
+      ''', () async {
     RankingController controller = GetIt.I();
+    await controller.init();
+    List<RankingEntity> rankingLoaded =
+        await controller.loadRanking('64500df828ed1318864e');
 
     final ranking = [
       RankingEntity(
-        username: 'ygor',
-        total: 206954,
+        username: 'Wuhl S',
+        total: 225413,
         temp: '63e2f1b96fd9b5a51bfe',
-        level: 74,
-        createdHour: 1675875574231,
-        quantity: 924,
-        minute: 103470,
-        userid: '629bfc0e8c808108623a',
-        uid: '63e3d4f65b12ce723a58',
-        timeup: 1683275547983,
-        createdAt: 1675875574,
-        updatedAt: 1683312711,
+        level: 77,
+        createdHour: 1675884546129,
+        quantity: 2715,
+        minute: 112431,
+        userid: '62a12ecf5378af951ee0',
+        uid: '63e3f803931cccfec6b2',
+        timeup: 1684118651289,
+        createdAt: 1675884547,
+        updatedAt: 1684118675,
       ),
     ];
 
-    final rankingLoaded = await controller.loadRanking('63e2f1b96fd9b5a51bfe');
-
-    expect(rankingLoaded[0].username, equals(ranking[0].username));
+    expectLater(rankingLoaded[0].username, equals(ranking[0].username));
     expect(controller.state.value, isA<FinishedStatusState>());
   });
 
