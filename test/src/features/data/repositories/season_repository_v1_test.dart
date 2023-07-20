@@ -1,8 +1,8 @@
 import 'package:client_driver/client_driver.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:manga_easy_ranking/manga_easy_ranking.dart';
-import 'package:manga_easy_ranking/src/features/domain/repositories/season_repository.dart';
+import 'package:ranking/src/features/domain/repositories/season_repository.dart';
+import 'package:ranking/src/microapp/ranking_microapp.dart';
 
 void main() {
   setUpAll(() {
