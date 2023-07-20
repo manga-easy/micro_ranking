@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:coffee_cup/coffe_cup.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
-import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
+import 'package:ranking/src/features/presenters/controllers/ranking_controller.dart';
 
 class UserAvatar extends StatelessWidget {
   final RankingController ct;

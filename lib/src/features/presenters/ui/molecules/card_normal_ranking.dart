@@ -1,8 +1,8 @@
 import 'package:coffee_cup/features/text/coffee_text.dart';
 import 'package:flutter/material.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
-import 'package:manga_easy_ranking/src/features/presenters/controllers/ranking_controller.dart';
-import 'package:manga_easy_ranking/src/features/presenters/ui/atomic/user_avatar.dart';
+import 'package:ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:ranking/src/features/presenters/controllers/ranking_controller.dart';
+import 'package:ranking/src/features/presenters/ui/atomic/user_avatar.dart';
 import 'package:manga_easy_themes/manga_easy_themes.dart';
 
 class CardNormalRanking extends StatelessWidget {

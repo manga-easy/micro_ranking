@@ -1,4 +1,4 @@
-library manga_easy_ranking;
+library ranking;
 
 export 'src/microapp/ranking_microapp.dart';
 //Exeção para exportar a page por conta do uso na home do app

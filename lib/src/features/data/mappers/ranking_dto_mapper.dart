@@ -1,5 +1,5 @@
-import 'package:manga_easy_ranking/src/features/data/dtos/ranking_dto.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/ranking_entity.dart';
+import 'package:ranking/src/features/data/dtos/ranking_dto.dart';
+import 'package:ranking/src/features/domain/entities/ranking_entity.dart';
 
 class RankingDtoMapper {
   RankingDto fromJson(Map<String, dynamic> json) {

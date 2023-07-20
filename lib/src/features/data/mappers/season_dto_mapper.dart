@@ -1,5 +1,5 @@
-import 'package:manga_easy_ranking/src/features/data/dtos/season_dto.dart';
-import 'package:manga_easy_ranking/src/features/domain/entities/season_entity.dart';
+import 'package:ranking/src/features/data/dtos/season_dto.dart';
+import 'package:ranking/src/features/domain/entities/season_entity.dart';
 
 class SeasonDtoMapper {
   SeasonDto fromJson(Map<String, dynamic> json) {
